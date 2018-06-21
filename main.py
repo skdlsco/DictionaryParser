@@ -9,9 +9,12 @@ def urlToBS(url):
 
 def getHeadAndTailInOrigin(div):
     a = div.find_all("a")
+    li = []
     for word in a:
         if '-' in word.text:
-            print(word.text)
+            li.append(word.text)
+
+    print(li)
 
 
 def getOrigin(word):
@@ -30,7 +33,10 @@ def getOrigin(word):
 
 
 def getMeansInDiv(div, word_class):
-    title = div.find("h3", {"class": "dic_tit6"}).find("span").text
+    if div.find("h3", {"class": "dic_tit^"}) is not None:
+        title = div.find("h3", {"class": "dic_tit6"}).find("span").text
+    else:
+        title = ""
     means = []
     dts = div.find("dl").find_all("dt")
 
@@ -45,15 +51,18 @@ def getWordClasses(word):
     base_url = "http://endic.naver.com"
     bs = urlToBS(base_url + "/search.nhn?sLn=kr&query=" + word)
 
-    query = bs.find("div", {"id": "wrap"}) \
-        .find("div", {"id": "container"}) \
-        .find("div", {"id": "content"}) \
-        .find("div", {"class": "word_num"}) \
-        .find("dl", {"class": "list_e2"}) \
-        .find("dt", {"class": "first"}) \
-        .find("span", {"class": "fnt_e30"}) \
-        .find("a")["href"]
-
+    try:
+        query = bs.find("div", {"id": "wrap"}) \
+            .find("div", {"id": "container"}) \
+            .find("div", {"id": "content"}) \
+            .find("div", {"class": "word_num"}) \
+            .find("dl", {"class": "list_e2"}) \
+            .find("dt", {"class": "first"}) \
+            .find("span", {"class": "fnt_e30"}) \
+            .find("a")["href"]
+    except:
+        print("cannot find result")
+        return  # 예외 처리
     bs = urlToBS(base_url + query)
 
     divs = bs.find("div", {"id": "wrap"}) \
@@ -68,5 +77,5 @@ def getWordClasses(word):
     print(word_class)
 
 
-getOrigin("complete")
-getWordClasses("apple")
+getOrigin("")
+getWordClasses("")
