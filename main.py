@@ -14,7 +14,7 @@ def getHeadAndTailInOrigin(div):
         if '-' in word.text:
             li.append(word.text)
 
-    print(li)
+    print(li)  # 접두 접미어 리스트로 출력
 
 
 def getOrigin(word):
@@ -29,11 +29,11 @@ def getOrigin(word):
     for section in result:
         div = section.find("div")
         getHeadAndTailInOrigin(div)
-        # print(div.text)
+        print(div.text)  # 실제 기원 문장으로 출력
 
 
 def getMeansInDiv(div, word_class):
-    if div.find("h3", {"class": "dic_tit^"}) is not None:
+    if div.find("h3", {"class": "dic_tit6"}) is not None:
         title = div.find("h3", {"class": "dic_tit6"}).find("span").text
     else:
         title = ""
@@ -77,5 +77,5 @@ def getWordClasses(word):
     print(word_class)
 
 
-getOrigin("")
-getWordClasses("")
+getOrigin("append")
+getWordClasses("be")
