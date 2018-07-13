@@ -97,11 +97,16 @@ def getExample(bs):
         for li in ul[:3]:  # 세개만
             sentence = li.find("div", {"class", "lineheight18 mar_top01"}) \
                 .find("span", {"class", "fnt_e09 _ttsText"}).text.strip()
+            index = li.find("div", {"class", "lineheight18 mar_top01"}) \
+                .find("span", {"class", "fnt_e09 _ttsText"}).find_all("i")
+            for i in range(len(index)):
+                if index[i].find("b") is not None:
+                    index = i
+                    break
             mean = li.find("div", {"class", "mar_top1"}).text.strip()
-            examples.append([sentence, mean])
+            examples.append([sentence, mean, index])
 
     return examples
 
-
-print(getOrigin("prior"))
+# print(getOrigin("prior"))
 print(getWordClasses("take"))
